@@ -1,0 +1,52 @@
+## VSCode Folder README
+
+## Overview
+
+This folder contains **Python** scripts primarily for training neural networks and running genetic algorithms (GAs) to optimize dielectric lens geometries. The scripts are designed for **VSCode** (Visual Studio Code) but can be adapted to run in any Python environment.
+
+## Main Scripts
+
+- **neural_network_V2.py**  
+  - Trains and evaluates neural network models using the dataset produced from MATLAB and CST simulations.
+  - Handles data loading (frequency/time domain data) and model architectures (e.g., dense layers, batch normalization, L1 regularization).
+  - Note: The trained model file **model_efield_freq_model_deep_l1_reg_elu.h5** is **not** included by default. You must train or provide your own model.
+
+- **GA.py**  
+  - Implements a genetic algorithm that uses the neural network as a surrogate for performance evaluation at a specific frequency (e.g., 500 MHz).
+  - Contains custom mutation/crossover strategies tailored for the lens geometry data structure.
+  - Runs the GA for a specified number of generations, then outputs the best individual's geometry.
+
+- **camparing_dataset_vs_basecase.py**  
+  - Compares newly generated lens dataset results against a baseline (e.g., a base-case antenna without a lens).
+  - Useful for validating improvements in E-field or other metrics relative to a known standard.
+
+## Requirements
+
+- **Python 3.8+**  
+- **NumPy**, **SciPy**, **Matplotlib**, **TensorFlow** (tested with 2.x), and **DEAP** (for GAs).
+- The `.h5` model (trained network) is **not** provided; you must train or generate your own.
+
+## Workflow
+
+1. **Data Preparation**  
+   - Ensure you have the geometry and simulation data from the MATLAB folder, typically in `.txt` files. 
+   - Adjust file paths in `neural_network_V2.py` and other scripts to load your dataset.
+
+2. **Neural Network Training**  
+   - Run `neural_network_V2.py` to build and train a model on the frequency/time domain data. 
+   - Evaluate performance metrics (loss, MSE at 500 MHz, etc.) to confirm modeling accuracy.
+
+3. **Genetic Algorithm Optimization**  
+   - Launch `GA.py` after training a suitable neural network.  
+   - The GA will attempt to maximize the E-field near 500 MHz using your trained model as a quick surrogate instead of full-wave simulations.
+
+4. **Comparison**  
+   - Optionally run `camparing_dataset_vs_basecase.py` to compare best-performing designs to a baseline.
+
+## Notes
+
+- Large design spaces may require substantial data for accurate neural network training.
+- The code references a `.h5` model file if it exists, but you can train your own or adapt the code to handle alternative checkpoints.
+- Adjust hyperparameters (e.g., mutation rates, number of generations, network layers) to explore different optimization/regression behaviors.
+
+If you have any questions or wish to contribute, please open an issue or submit a pull request in the main repository!
