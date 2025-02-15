@@ -1,0 +1,36 @@
+### **Overview**
+This folder contains MATLAB scripts used for generating and manipulating dielectric lens geometries, as well as for automating interactions with CST Studio Suite. It also includes heuristic functions for selecting edges during lens construction.
+
+### **Files**
+1. **random_lens_generatorV3.m**  
+   - Main driver script for randomly creating lens geometries.  
+   - Defines boundaries, sets resolution, applies heuristics, and automates shape creation in CST.
+
+2. **mappingV3.m**  
+   - Maps the newly generated lens surfaces into a node-based format suitable for further processing (e.g., neural network input).
+
+3. **largest_z_heuristic.m, largest_y_heuristic.m, smallest_z_heuristic.m, smallest_y_heuristic.m**  
+   - Heuristic functions invoked during lens geometry generation.  
+   - Each function selects open edges based on largest or smallest values of z or y at certain intervals, introducing structural variety.
+
+4. **(Additional Utility Scripts)**  
+   - May include boundary checks or specialized transformations to handle geometry constraints.
+
+### **Usage**
+1. **Open and Edit**  
+   - Customize parameters (e.g., `outside_boundary`, `lens_base_inside_boundary`, `cone_angle`) at the top of `random_lens_generatorV3.m`.
+2. **Run in MATLAB**  
+   - Execute `random_lens_generatorV3.m` to generate lens models.  
+   - This script interfaces with CST to create each geometry. Ensure CST is installed and accessible via the COM interface.
+3. **Map to Node Format**  
+   - Use `mappingV3.m` post-generation to convert geometry edges into numeric arrays, which can then be fed into machine learning pipelines.
+
+### **Notes**
+- The scripts assume a Windows environment with CST Studio Suite.  
+- Large-scale geometry generation can be time-consuming; consider batch runs or HPC resources for faster data collection.
+- Adjust heuristic parameters (intervals, boundary constraints) to control lens shape diversity.
+
+### **Support / Contact**
+- For questions, open an issue in the main repository or contact the project maintainers.
+
+---
